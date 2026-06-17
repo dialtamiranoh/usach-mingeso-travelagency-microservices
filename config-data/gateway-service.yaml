@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ms-usuarios
+          uri: lb://ms-usuarios
+          predicates:
+            - Path=/api/users/**
+        - id: ms-paquetes
+          uri: lb://ms-paquetes
+          predicates:
+            - Path=/api/tourist-packages/**,/api/destinations/**,/api/categories/**,/api/package-types/**,/api/seasons/**,/api/package-services/**,/api/promotions/**,/api/statuses/**
+        - id: ms-reservas
+          uri: lb://ms-reservas
+          predicates:
+            - Path=/api/bookings/**
+        - id: ms-pagos
+          uri: lb://ms-pagos
+          predicates:
+            - Path=/api/payments/**
+        - id: ms-seguimiento
+          uri: lb://ms-seguimiento
+          predicates:
+            - Path=/api/tracking/**
+        - id: ms-reportes
+          uri: lb://ms-reportes
+          predicates:
+            - Path=/api/reports/**

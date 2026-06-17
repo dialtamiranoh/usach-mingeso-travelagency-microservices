@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-pagos
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-pagos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-pagos
+  template:
+    metadata:
+      labels:
+        app: ms-pagos
+    spec:
+      containers:
+        - name: ms-pagos
+          image: dialtamiranoh/travel-agency-ms-pagos:latest
+          ports:
+            - containerPort: 8080

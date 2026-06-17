@@ -1,0 +1,20 @@
+# TODO: Deployment para eureka-service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-service
+  template:
+    metadata:
+      labels:
+        app: eureka-service
+    spec:
+      containers:
+        - name: eureka-service
+          image: dialtamiranoh/travel-agency-eureka-service:latest
+          ports:
+            - containerPort: 8080

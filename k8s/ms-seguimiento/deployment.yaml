@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-seguimiento
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-seguimiento
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-seguimiento
+  template:
+    metadata:
+      labels:
+        app: ms-seguimiento
+    spec:
+      containers:
+        - name: ms-seguimiento
+          image: dialtamiranoh/travel-agency-ms-seguimiento:latest
+          ports:
+            - containerPort: 8080

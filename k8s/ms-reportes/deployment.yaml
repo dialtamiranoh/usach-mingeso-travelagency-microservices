@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-reportes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-reportes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-reportes
+  template:
+    metadata:
+      labels:
+        app: ms-reportes
+    spec:
+      containers:
+        - name: ms-reportes
+          image: dialtamiranoh/travel-agency-ms-reportes:latest
+          ports:
+            - containerPort: 8080

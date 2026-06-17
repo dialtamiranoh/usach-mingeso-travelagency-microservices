@@ -1,0 +1,29 @@
+# Maven
+target/
+*.jar
+*.class
+
+# Spring
+*.properties.local
+*.yaml.local
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+dist/
+.env

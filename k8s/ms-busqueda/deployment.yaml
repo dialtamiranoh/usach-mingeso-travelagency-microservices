@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-busqueda
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-busqueda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-busqueda
+  template:
+    metadata:
+      labels:
+        app: ms-busqueda
+    spec:
+      containers:
+        - name: ms-busqueda
+          image: dialtamiranoh/travel-agency-ms-busqueda:latest
+          ports:
+            - containerPort: 8080

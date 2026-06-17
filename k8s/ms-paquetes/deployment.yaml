@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-paquetes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-paquetes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-paquetes
+  template:
+    metadata:
+      labels:
+        app: ms-paquetes
+    spec:
+      containers:
+        - name: ms-paquetes
+          image: dialtamiranoh/travel-agency-ms-paquetes:latest
+          ports:
+            - containerPort: 8080

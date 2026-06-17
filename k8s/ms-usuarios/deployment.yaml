@@ -1,0 +1,20 @@
+# TODO: Deployment para ms-usuarios
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-usuarios
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-usuarios
+  template:
+    metadata:
+      labels:
+        app: ms-usuarios
+    spec:
+      containers:
+        - name: ms-usuarios
+          image: dialtamiranoh/travel-agency-ms-usuarios:latest
+          ports:
+            - containerPort: 8080
