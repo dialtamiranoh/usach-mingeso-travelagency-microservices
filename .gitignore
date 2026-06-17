@@ -1,7 +1,7 @@
-# Maven
-target/
-*.jar
-*.class
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
 # Spring
 *.properties.local
@@ -10,14 +10,7 @@ target/
 # IDE
 .idea/
 *.iml
-*.iws
-*.ipr
 .vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 
 # OS
 .DS_Store

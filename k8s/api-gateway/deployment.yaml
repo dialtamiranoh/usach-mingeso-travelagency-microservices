@@ -1,4 +1,4 @@
-# TODO: Deployment para api-gateway
+# TODO: completar Deployment para api-gateway
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: api-gateway
           image: dialtamiranoh/travel-agency-api-gateway:latest
-          ports:
-            - containerPort: 8080

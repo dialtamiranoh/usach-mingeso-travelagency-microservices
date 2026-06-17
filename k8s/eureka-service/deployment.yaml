@@ -1,4 +1,4 @@
-# TODO: Deployment para eureka-service
+# TODO: completar Deployment para eureka-service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: eureka-service
           image: dialtamiranoh/travel-agency-eureka-service:latest
-          ports:
-            - containerPort: 8080

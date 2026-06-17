@@ -1,4 +1,4 @@
-# TODO: Deployment para ms-reportes
+# TODO: completar Deployment para ms-reportes
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: ms-reportes
           image: dialtamiranoh/travel-agency-ms-reportes:latest
-          ports:
-            - containerPort: 8080

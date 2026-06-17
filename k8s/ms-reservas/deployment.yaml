@@ -1,4 +1,4 @@
-# TODO: Deployment para ms-reservas
+# TODO: completar Deployment para ms-reservas
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: ms-reservas
           image: dialtamiranoh/travel-agency-ms-reservas:latest
-          ports:
-            - containerPort: 8080

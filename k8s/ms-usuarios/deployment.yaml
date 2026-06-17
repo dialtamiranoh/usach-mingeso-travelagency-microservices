@@ -1,4 +1,4 @@
-# TODO: Deployment para ms-usuarios
+# TODO: completar Deployment para ms-usuarios
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: ms-usuarios
           image: dialtamiranoh/travel-agency-ms-usuarios:latest
-          ports:
-            - containerPort: 8080

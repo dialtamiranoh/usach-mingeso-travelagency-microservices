@@ -1,4 +1,4 @@
-# TODO: Deployment para frontend
+# TODO: completar Deployment para frontend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: frontend
           image: dialtamiranoh/travel-agency-frontend:latest
-          ports:
-            - containerPort: 8080

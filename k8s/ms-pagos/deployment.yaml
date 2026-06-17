@@ -1,4 +1,4 @@
-# TODO: Deployment para ms-pagos
+# TODO: completar Deployment para ms-pagos
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: ms-pagos
           image: dialtamiranoh/travel-agency-ms-pagos:latest
-          ports:
-            - containerPort: 8080

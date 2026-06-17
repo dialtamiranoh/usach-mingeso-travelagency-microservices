@@ -1,4 +1,4 @@
-# TODO: Deployment para config-service
+# TODO: completar Deployment para config-service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,5 +16,3 @@ spec:
       containers:
         - name: config-service
           image: dialtamiranoh/travel-agency-config-service:latest
-          ports:
-            - containerPort: 8080
