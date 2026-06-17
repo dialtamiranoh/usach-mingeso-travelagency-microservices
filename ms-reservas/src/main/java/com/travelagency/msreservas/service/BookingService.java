@@ -4,6 +4,7 @@ import com.travelagency.msreservas.entity.BookingEntity;
 import com.travelagency.msreservas.entity.StatusEntity;
 import com.travelagency.msreservas.model.PromotionDTO;
 import com.travelagency.msreservas.model.TouristPackageDTO;
+import com.travelagency.msreservas.model.UserDTO;
 import com.travelagency.msreservas.repository.BookingRepository;
 import com.travelagency.msreservas.repository.StatusRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -44,7 +47,7 @@ public class BookingService {
     public BookingEntity update(BookingEntity b) { return bookingRepository.save(b); }
 
     @Transactional
-    public BookingEntity createBooking(Long packageId, String keycloakId, int passengerCount) {
+    public BookingEntity createBooking(Long packageId, String keycloakId, int passengerCount, String authToken) {
 
         // 1. Obtener paquete desde ms-paquetes via RestTemplate
         TouristPackageDTO pkg = restTemplate.getForObject(
@@ -148,9 +151,27 @@ public class BookingService {
             .findByNameAndEntityType("PENDING_PAYMENT", "BOOKING")
             .orElseThrow(() -> new RuntimeException("Estado PENDING_PAYMENT no encontrado"));
 
-        // 9. Crear reserva
+        // 9. Obtener userId desde ms-usuarios
+        HttpHeaders headers = new HttpHeaders();
+        if (authToken != null) headers.set(HttpHeaders.AUTHORIZATION, authToken);
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+        Long userId = null;
+        try {
+            UserDTO user = restTemplate.exchange(
+                "http://ms-usuarios/api/users/keycloak/" + keycloakId,
+                org.springframework.http.HttpMethod.GET,
+                httpEntity,
+                com.travelagency.msreservas.model.UserDTO.class).getBody();
+            if (user != null) userId = user.getId();
+        } catch (Exception e) {
+            log.warn("No se pudo obtener userId desde ms-usuarios: {}", e.getMessage());
+        }
+        if (userId == null) throw new RuntimeException("Usuario no encontrado en el sistema");
+
+        // 10. Crear reserva
         BookingEntity booking = new BookingEntity();
         booking.setKeycloakId(keycloakId);
+        booking.setUserId(userId);
         booking.setTouristPackageId(packageId);
         booking.setPassengerCount(passengerCount);
         booking.setBaseAmount(baseAmount);
@@ -220,3 +241,10 @@ public class BookingService {
         }
     }
 }
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ms-reservas
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ta_ms_reservas
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  instance:
+    prefer-ip-address: true

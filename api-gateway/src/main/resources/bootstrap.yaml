@@ -5,3 +5,7 @@ spring:
     config:
       enabled: true
       uri: http://localhost:8888
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1

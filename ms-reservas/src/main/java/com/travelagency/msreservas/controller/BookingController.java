@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -58,9 +59,10 @@ public class BookingController {
     public ResponseEntity<?> createBooking(
             @RequestParam Long packageId,
             @RequestParam int passengerCount,
-            @RequestParam String keycloakId) {
+            @RequestParam String keycloakId,
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authToken) {
         try {
-            BookingEntity booking = bookingService.createBooking(packageId, keycloakId, passengerCount);
+            BookingEntity booking = bookingService.createBooking(packageId, keycloakId, passengerCount, authToken);
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -94,3 +96,6 @@ public class BookingController {
         }
     }
 }
+
+
+
