@@ -64,9 +64,13 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
+            if [ ! -d ~/usach-mingeso-travelagency-microservices ]; then
+              git clone https://github.com/dialtamiranoh/usach-mingeso-travelagency-microservices.git ~/usach-mingeso-travelagency-microservices
+            fi
             cd ~/usach-mingeso-travelagency-microservices
             git pull origin main
             kubectl apply -f k8s/
-            kubectl rollout restart deployment --all
+            kubectl get pods
+
 
 
