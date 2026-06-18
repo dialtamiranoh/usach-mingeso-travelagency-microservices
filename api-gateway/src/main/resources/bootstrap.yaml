@@ -4,8 +4,9 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8888
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
 eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+
