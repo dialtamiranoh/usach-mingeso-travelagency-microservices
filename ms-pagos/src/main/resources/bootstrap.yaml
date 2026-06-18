@@ -6,7 +6,7 @@ spring:
       enabled: true
       uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
   datasource:
-    url: jdbc:postgresql://localhost:5432/ta_ms_pagos
+    url: jdbc:postgresql://ms-pagos-postgres:5432/ta_ms_pagos
     username: postgres
     password: postgres
   jpa:
@@ -15,6 +15,12 @@ spring:
     show-sql: true
 
 eureka:
+  client:
+    service-url:
+      default-zone: http://eureka-service:8761/eureka
   instance:
     prefer-ip-address: true
+
+
+
 

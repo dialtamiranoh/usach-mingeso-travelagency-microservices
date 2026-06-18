@@ -6,7 +6,11 @@ spring:
       enabled: true
       uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
 eureka:
+  client:
+    service-url:
+      default-zone: http://eureka-service:8761/eureka
   instance:
     prefer-ip-address: true
-    ip-address: 127.0.0.1
+
+
 

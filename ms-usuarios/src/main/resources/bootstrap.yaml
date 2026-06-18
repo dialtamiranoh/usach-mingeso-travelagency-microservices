@@ -6,7 +6,7 @@ spring:
       enabled: true
       uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
   datasource:
-    url: jdbc:postgresql://localhost:5432/ta_ms_usuarios
+    url: jdbc:postgresql://ms-usuarios-postgres:5432/ta_ms_usuarios
     username: postgres
     password: postgres
   jpa:
@@ -17,9 +17,16 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9090/realms/travelagency
+          issuer-uri: http://3.209.159.160:9090/realms/travelagency
 
 eureka:
+  client:
+    service-url:
+      default-zone: http://eureka-service:8761/eureka
   instance:
     prefer-ip-address: true
+
+
+
+
 
