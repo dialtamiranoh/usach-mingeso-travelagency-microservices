@@ -31,6 +31,10 @@ spec:
               value: postgres
             - name: SPRING_JPA_HIBERNATE_DDL_AUTO
               value: update
+            - name: EUREKA_HOST
+              value: eureka-service
+            - name: EUREKA_HOST
+              value: eureka-service
 ---
 apiVersion: v1
 kind: Service
@@ -44,3 +48,5 @@ spec:
     - port: 8080
       targetPort: 8080
   type: ClusterIP
+
+

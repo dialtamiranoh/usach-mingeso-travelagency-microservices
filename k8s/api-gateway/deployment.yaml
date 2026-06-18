@@ -23,6 +23,10 @@ spec:
               value: http://config-service:8888
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
               value: http://eureka-service:8761/eureka
+            - name: EUREKA_HOST
+              value: eureka-service
+            - name: EUREKA_HOST
+              value: eureka-service
 ---
 apiVersion: v1
 kind: Service
@@ -37,3 +41,5 @@ spec:
       targetPort: 8090
       nodePort: 30090
   type: NodePort
+
+
