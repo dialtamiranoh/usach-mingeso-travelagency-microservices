@@ -1,8 +1,8 @@
-# TODO: completar Deployment para ms-reservas
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-reservas
+  namespace: travelagency
 spec:
   replicas: 1
   selector:
@@ -15,4 +15,32 @@ spec:
     spec:
       containers:
         - name: ms-reservas
-          image: dialtamiranoh/travel-agency-ms-reservas:latest
+          image: dialtamiranoh/travelagency-ms-reservas:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-service:8761/eureka
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://ms-reservas-postgres:5432/ta_ms_reservas
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-reservas
+  namespace: travelagency
+spec:
+  selector:
+    app: ms-reservas
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP

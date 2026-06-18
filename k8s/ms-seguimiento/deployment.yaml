@@ -1,8 +1,8 @@
-# TODO: completar Deployment para ms-seguimiento
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-seguimiento
+  namespace: travelagency
 spec:
   replicas: 1
   selector:
@@ -15,4 +15,32 @@ spec:
     spec:
       containers:
         - name: ms-seguimiento
-          image: dialtamiranoh/travel-agency-ms-seguimiento:latest
+          image: dialtamiranoh/travelagency-ms-seguimiento:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-service:8761/eureka
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://ms-seguimiento-postgres:5432/ta_ms_seguimiento
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-seguimiento
+  namespace: travelagency
+spec:
+  selector:
+    app: ms-seguimiento
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP

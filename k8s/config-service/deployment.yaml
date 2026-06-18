@@ -1,8 +1,8 @@
-# TODO: completar Deployment para config-service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: config-service
+  namespace: travelagency
 spec:
   replicas: 1
   selector:
@@ -15,4 +15,19 @@ spec:
     spec:
       containers:
         - name: config-service
-          image: dialtamiranoh/travel-agency-config-service:latest
+          image: dialtamiranoh/travelagency-config-service:latest
+          ports:
+            - containerPort: 8888
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service
+  namespace: travelagency
+spec:
+  selector:
+    app: config-service
+  ports:
+    - port: 8888
+      targetPort: 8888
+  type: ClusterIP

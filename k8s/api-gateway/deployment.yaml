@@ -1,8 +1,8 @@
-# TODO: completar Deployment para api-gateway
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-gateway
+  namespace: travelagency
 spec:
   replicas: 1
   selector:
@@ -15,4 +15,25 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: dialtamiranoh/travel-agency-api-gateway:latest
+          image: dialtamiranoh/travelagency-api-gateway:latest
+          ports:
+            - containerPort: 8090
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-service:8761/eureka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: travelagency
+spec:
+  selector:
+    app: api-gateway
+  ports:
+    - port: 8090
+      targetPort: 8090
+      nodePort: 30090
+  type: NodePort

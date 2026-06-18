@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ms-seguimiento-pvc
+  namespace: travelagency
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-seguimiento-postgres
+  namespace: travelagency
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-seguimiento-postgres
+  template:
+    metadata:
+      labels:
+        app: ms-seguimiento-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: "ta_ms_seguimiento"
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: ms-seguimiento-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-seguimiento-postgres
+  namespace: travelagency
+spec:
+  selector:
+    app: ms-seguimiento-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

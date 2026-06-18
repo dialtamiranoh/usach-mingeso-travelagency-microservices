@@ -1,8 +1,8 @@
-# TODO: completar Deployment para ms-paquetes
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-paquetes
+  namespace: travelagency
 spec:
   replicas: 1
   selector:
@@ -15,4 +15,32 @@ spec:
     spec:
       containers:
         - name: ms-paquetes
-          image: dialtamiranoh/travel-agency-ms-paquetes:latest
+          image: dialtamiranoh/travelagency-ms-paquetes:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-service:8761/eureka
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://ms-paquetes-postgres:5432/ta_ms_paquetes
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-paquetes
+  namespace: travelagency
+spec:
+  selector:
+    app: ms-paquetes
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
